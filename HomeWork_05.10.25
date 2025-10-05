@@ -1,0 +1,235 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cstdlib> 
+#include <ctime> 
+
+
+//task_1
+int main() {
+    int n;
+    std::cin >> n;
+
+    int sum = 0;
+
+    for (int i = 1; i <= n; ++i) {
+        sum += i;
+    }
+
+    std::cout << n << sum << std::endl;
+
+    return 0;
+}
+
+//task_2
+int main() {
+    const double rise_per_year = 1.5;
+    const int years = 25;
+
+    std::cout << std::fixed << std::setprecision(1);
+
+    for (int year = 1; year <= years; ++year) {
+        double total_rise = rise_per_year * year;
+        std::cout << std::setw(3) << year << "\t" << total_rise << std::endl;
+    }
+
+    return 0;
+}
+
+
+//task_4
+int main() {
+    double speed;
+    int hours;
+
+    do {
+        std::cin >> speed;
+    } while (speed < 0);
+
+    do {
+        std::cin >> hours;
+    } while (hours < 1);
+
+    std::cout << std::fixed << std::setprecision(2);
+
+
+    for (int hour = 1; hour <= hours; ++hour) {
+        double distance = speed * hour;
+        std::cout << hour << "\t" << distance << std::endl;
+    }
+
+    return 0;
+}
+
+//task_5
+int main() {
+    int days;
+
+    do {
+        std::cin >> days;
+    } while (days < 1);
+
+    double totalEarnings = 0.0;
+
+    for (int day = 1; day <= days; ++day) {
+        double dailyEarnings = pow(2, day - 1) / 100.0;
+        totalEarnings += dailyEarnings;
+        std::cout << day << "\t" << std::fixed << std::setprecision(2) << dailyEarnings << std::endl;
+    }
+
+    std::cout << std::fixed << std::setprecision(2) << totalEarnings << std::endl;
+
+    return 0;
+}
+
+//task_6
+int main() {
+    int floors;
+
+    do {
+        std::cin >> floors;
+    } while (floors < 1);
+
+    int totalRooms = 0;
+    int totalOccupied = 0;
+
+    for (int floor = 1; floor <= floors; ++floor) {
+        if (floor == 13) {
+            continue;
+        }
+
+        int rooms, occupied;
+
+        do {
+            std::cin >> rooms;
+        } while (rooms < 10);
+
+        do {
+            std::cin >> occupied;
+        } while (occupied < 0 || occupied > rooms);
+
+        totalRooms += rooms;
+        totalOccupied += occupied;
+    }
+
+    int totalFree = totalRooms - totalOccupied;
+    double occupancyRate = totalRooms > 0 ? (static_cast<double>(totalOccupied) / totalRooms) * 100 : 0;
+
+    std::cout << totalRooms << std::endl;
+    std::cout << totalOccupied << std::endl;
+    std::cout << totalFree << std::endl;
+    std::cout << std::fixed << std::setprecision(2) 
+              << occupancyRate << std::endl;
+
+    return 0;
+}
+
+//task_7
+int main() {
+    std::string employeeNumber;
+    double grossSalary, stateTax, federalTax, ficaWithholding;
+    double totalGrossSalary = 0.0;
+    double totalStateTax = 0.0;
+    double totalFederalTax = 0.0;
+    double totalFicaWithholding = 0.0;
+    double totalNetPay = 0.0;
+
+    while (true) {
+        std::cin >> employeeNumber;
+
+        if (employeeNumber == "O" || employeeNumber == "o") {
+            break;
+        }
+
+        do {
+            std::cin >> grossSalary;
+        } while (grossSalary < 0);
+
+        do {
+            std::cin >> stateTax;
+        } while (stateTax < 0 || stateTax > grossSalary);
+
+        do {
+            std::cin >> federalTax;
+        } while (federalTax < 0 || federalTax > grossSalary);
+
+        do {
+            std::cin >> ficaWithholding;
+        } while (ficaWithholding < 0 || ficaWithholding > grossSalary);
+
+        double netPay = grossSalary - (stateTax + federalTax + ficaWithholding);
+
+        totalGrossSalary += grossSalary;
+        totalStateTax += stateTax;
+        totalFederalTax += federalTax;
+        totalFicaWithholding += ficaWithholding;
+        totalNetPay += netPay;
+
+        std::cout << employeeNumber << std::endl;
+        std::cout << std::fixed << std::setprecision(2) << grossSalary << std::endl;
+        std::cout << stateTax << std::endl;
+        std::cout << federalTax << std::endl;
+        std::cout << ficaWithholding << std::endl;
+        std::cout << netPay <<  std::endl;
+    }
+
+    std::cout << std::endl;
+    std::cout << totalGrossSalary << std::endl;
+    std::cout << totalStateTax << std::endl;
+    std::cout << totalFederalTax << std::endl;
+    std::cout << totalFicaWithholding << std::endl;
+    std::cout << totalNetPay << std::endl;
+
+    return 0;
+}
+
+//task_8
+int main() {
+    double budget;
+    double expense;
+    double totalExpenses = 0.0;
+
+    std::cin >> budget;
+
+    while (true) {
+        std::cin >> expense;
+
+        if (expense == 0) {
+            break;
+        }
+
+        totalExpenses += expense;
+    }
+
+    double balance = budget - totalExpenses;
+
+    std::cout << std::fixed << std::setprecision(2);
+    if (balance >= 0) {
+    } else {
+        std::cout << -balance << std::endl;
+    }
+
+    return 0;
+}
+
+//task_9
+int main() {
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+    int randomNumber = std::rand() % 100 + 1;
+    int guess = 0;
+
+    while (guess != randomNumber) {
+        std::cin >> guess;
+
+        if (guess > randomNumber) {
+            std::cout << "Too high, try again." << std::endl;
+        } else if (guess < randomNumber) {
+            std::cout << "Too low, try again." << std::endl;
+        } else {
+            std::cout << randomNumber << "!" << std::endl;
+        }
+    }
+
+    return 0;
+}
